@@ -31,6 +31,10 @@
       "command": "./mvnw clean compile exec:java@style",
       "windows": {
         "command": ".\\mvnw.cmd clean compile exec:java@style"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": false
       }
     }
   ]
