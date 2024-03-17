@@ -127,6 +127,10 @@ public class VenueHireSystem {
         if (validity) {
           String venueSuccessfullyCreatedMessage = MessageCli.VENUE_SUCCESSFULLY_CREATED.getMessage(venueName, venueCode);
           System.out.println(venueSuccessfullyCreatedMessage);
+          venueList.add(venueName);
+          venueList.add(venueCode);
+          venueList.add(capacityInput);
+          venueList.add(hireFeeInput);
         }
 
       }
