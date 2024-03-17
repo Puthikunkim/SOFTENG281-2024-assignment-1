@@ -63,7 +63,7 @@ public class VenueHireSystem {
         System.out.println(venueEntryMessage);
       }
     } else {
-      String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()), "s");
+      String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()/4), "s");
       System.out.println(numberVenuesMessage);
 
       int venueMessageSize = 4; 
