@@ -79,7 +79,7 @@ public class VenueHireSystem {
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
         boolean validity = true;
         // venueName check
-        if (!venueName.trim().isEmpty()) {
+        if (venueName.trim().isEmpty()) {
           validity = false;
           String venueUnsuccessfulMessage = MessageCli.VENUE_NOT_CREATED_EMPTY_NAME.getMessage();
           System.out.println(venueUnsuccessfulMessage);
@@ -95,7 +95,7 @@ public class VenueHireSystem {
           }
         }
 
-        // capacityInput and hireFeeInput number check
+        // capacityInput number check
         try {
           int intCapacity = Integer.parseInt(capacityInput);
           if (intCapacity < 1) {
@@ -109,7 +109,7 @@ public class VenueHireSystem {
           System.out.println(venueUnsuccessfulMessage);
         }
 
-        // capacityInput and hireFeeInput number check
+        // hireFeeInput number check
         try {
           int intHireFee = Integer.parseInt(hireFeeInput);
           if (intHireFee < 1) {
