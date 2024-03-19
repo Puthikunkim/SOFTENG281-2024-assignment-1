@@ -15,15 +15,16 @@ public class VenueHireSystem {
   }
 
   public void printVenues() {
+    // No venues
     if (venueList.isEmpty()) {
       String noVenuesMessage = MessageCli.NO_VENUES.getMessage();
       System.out.println(noVenuesMessage);
-    } else if (venueList.size() == 4) {
+    } else if (venueList.size() == 4) { // One venue
       String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("is", "one", "");
       System.out.println(numberVenuesMessage);
       String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(0), venueList.get(1), venueList.get(2), venueList.get(3), "");
       System.out.println(venueEntryMessage);
-    } else if (venueList.size() > 4 && venueList.size() < 40) {
+    } else if (venueList.size() > 4 && venueList.size() < 40) { // Under ten venues
       int number = venueList.size()/4;
       String numberConverted = "";
       switch (number) {
@@ -62,7 +63,7 @@ public class VenueHireSystem {
         String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(startIndex), venueList.get(startIndex+1), venueList.get(startIndex+2), venueList.get(startIndex+3), "");
         System.out.println(venueEntryMessage);
       }
-    } else {
+    } else { // More than 10 venues
       String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()/4), "s");
       System.out.println(numberVenuesMessage);
 
