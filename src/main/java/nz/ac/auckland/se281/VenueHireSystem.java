@@ -7,11 +7,9 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
-  private ArrayList<String> venueList = new ArrayList<String>();
-
+  private ArrayList<Venue> venueList = new ArrayList<Venue>();
 
   public VenueHireSystem() {
-    
   }
 
   public void printVenues() {
@@ -19,13 +17,13 @@ public class VenueHireSystem {
     if (venueList.isEmpty()) {
       String noVenuesMessage = MessageCli.NO_VENUES.getMessage();
       System.out.println(noVenuesMessage);
-    } else if (venueList.size() == 4) { // One venue
+    } else if (venueList.size() == 1) { // One venue
       String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("is", "one", "");
       System.out.println(numberVenuesMessage);
-      String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(0), venueList.get(1), venueList.get(2), venueList.get(3), "");
+      String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(0).getVenueName(), venueList.get(0).getVenueCode(), venueList.get(0).getCapacityInput(), venueList.get(0).getHireFeeInput(), "");
       System.out.println(venueEntryMessage);
-    } else if (venueList.size() > 4 && venueList.size() < 40) { // Under ten venues
-      int number = venueList.size()/4;
+    } else if (venueList.size() > 1 && venueList.size() < 10) { // Under ten venues
+      int number = venueList.size();
       String numberConverted = "";
       switch (number) {
         case 2:
@@ -57,20 +55,16 @@ public class VenueHireSystem {
       String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", numberConverted, "s");
       System.out.println(numberVenuesMessage);
 
-      int venueMessageSize = 4; 
-      for (int i = 0; i < (venueList.size() / venueMessageSize); i++) {
-        int startIndex = i * venueMessageSize;
-        String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(startIndex), venueList.get(startIndex+1), venueList.get(startIndex+2), venueList.get(startIndex+3), "");
+      for (int i = 0; i < venueList.size(); i++) {
+        String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(i).getVenueName(), venueList.get(i).getVenueCode(), venueList.get(i).getCapacityInput(), venueList.get(i).getHireFeeInput(), "");
         System.out.println(venueEntryMessage);
       }
     } else { // More than 10 venues
-      String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()/4), "s");
+      String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()), "s");
       System.out.println(numberVenuesMessage);
 
-      int venueMessageSize = 4; 
-      for (int i = 0; i < (venueList.size() / venueMessageSize); i++) {
-        int startIndex = i * venueMessageSize;
-        String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(startIndex), venueList.get(startIndex+1), venueList.get(startIndex+2), venueList.get(startIndex+3), "");
+      for (int i = 0; i < venueList.size(); i++) {
+        String venueEntryMessage = MessageCli.VENUE_ENTRY.getMessage(venueList.get(i).getVenueName(), venueList.get(i).getVenueCode(), venueList.get(i).getCapacityInput(), venueList.get(i).getHireFeeInput(), "");
         System.out.println(venueEntryMessage);
       }
     }
@@ -87,10 +81,10 @@ public class VenueHireSystem {
         } 
 
         // venueCode check
-        for (int i = 1; i < venueList.size(); i += 4) {
-          if (venueList.get(i).equals(venueCode)) {
+        for (int i = 1; i < venueList.size(); i++) {
+          if (venueList.get(i).getVenueCode().equals(venueCode)) {
               validity = false;
-              String venueUnsuccessfulMessage = MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.getMessage(venueCode, venueList.get(i-1));
+              String venueUnsuccessfulMessage = MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.getMessage(venueCode, venueList.get(i).getVenueName());
               System.out.println(venueUnsuccessfulMessage);
               break;
           }
@@ -128,13 +122,12 @@ public class VenueHireSystem {
         if (validity) {
           String venueSuccessfullyCreatedMessage = MessageCli.VENUE_SUCCESSFULLY_CREATED.getMessage(venueName, venueCode);
           System.out.println(venueSuccessfullyCreatedMessage);
-          venueList.add(venueName);
-          venueList.add(venueCode);
-          venueList.add(capacityInput);
-          venueList.add(hireFeeInput);
+          Venue venue = new Venue(venueName, venueCode, capacityInput, hireFeeInput);
+          venueList.add(venue);
         }
 
       }
+      
 
   public void setSystemDate(String dateInput) {
     // TODO implement this method
