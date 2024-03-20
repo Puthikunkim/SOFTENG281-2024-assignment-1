@@ -81,7 +81,7 @@ public class VenueHireSystem {
         } 
 
         // venueCode check
-        for (int i = 1; i < venueList.size(); i++) {
+        for (int i = 0; i < venueList.size(); i++) {
           if (venueList.get(i).getVenueCode().equals(venueCode)) {
               validity = false;
               String venueUnsuccessfulMessage = MessageCli.VENUE_NOT_CREATED_CODE_EXISTS.getMessage(venueCode, venueList.get(i).getVenueName());
