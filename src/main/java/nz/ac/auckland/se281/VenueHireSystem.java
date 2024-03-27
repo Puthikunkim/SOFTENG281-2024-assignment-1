@@ -6,12 +6,13 @@ import nz.ac.auckland.se281.Types.FloralType;
 
 public class VenueHireSystem {
 
+  // ArrayList to store venues.
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
 
   public VenueHireSystem() {}
 
+  // Method to print venues
   public void printVenues() {
-
     // Check for no venues.
     if (venueList.isEmpty()) {
       String noVenuesMessage = MessageCli.NO_VENUES.getMessage();
@@ -58,10 +59,9 @@ public class VenueHireSystem {
           numberConverted = "nine";
           break;
       }
-
       String numberVenuesMessage = MessageCli.NUMBER_VENUES.getMessage("are", numberConverted, "s");
       System.out.println(numberVenuesMessage);
-
+      // Print details of each venue
       for (int i = 0; i < venueList.size(); i++) {
         String venueEntryMessage =
             MessageCli.VENUE_ENTRY.getMessage(
@@ -77,7 +77,7 @@ public class VenueHireSystem {
       String numberVenuesMessage =
           MessageCli.NUMBER_VENUES.getMessage("are", String.valueOf(venueList.size()), "s");
       System.out.println(numberVenuesMessage);
-
+      // Print details of each venue
       for (int i = 0; i < venueList.size(); i++) {
         String venueEntryMessage =
             MessageCli.VENUE_ENTRY.getMessage(
@@ -91,6 +91,7 @@ public class VenueHireSystem {
     }
   }
 
+  // Method to create a new venue
   public void createVenue(
       String venueName, String venueCode, String capacityInput, String hireFeeInput) {
     boolean validity = true;
