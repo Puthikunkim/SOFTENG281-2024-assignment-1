@@ -165,7 +165,13 @@ public class VenueHireSystem {
   }
 
   public void printSystemDate() {
-    // TODO implement this method
+    if (systemDate == null) {
+      String currentDateMessage = MessageCli.CURRENT_DATE.getMessage("not set");
+      System.out.println(currentDateMessage);
+    } else {
+      String currentDateMessage = MessageCli.CURRENT_DATE.getMessage(systemDate);
+      System.out.println(currentDateMessage);
+    }
   }
 
   public void makeBooking(String[] options) {
