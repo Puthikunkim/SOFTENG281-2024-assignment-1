@@ -205,12 +205,12 @@ public class VenueHireSystem {
         // Year check.
         System.out.println(bookingNotMadeMessage);
         validity = false;
-      } else {
+      } else if (bookingYear == systemYear) {
         if (bookingMonth < systemMonth) {
           // Month check.
           System.out.println(bookingNotMadeMessage);
           validity = false;
-        } else {
+        } else if (bookingMonth == systemMonth) {
           // Day check.
           if (bookingDay < systemDay) {
             System.out.println(bookingNotMadeMessage);
@@ -228,16 +228,20 @@ public class VenueHireSystem {
     }
     // Variable to store venue name.
     String venueName = "";
+    // Variable to track if venue code exists.
+    boolean venueCodeExists = false;
     // Check if venue code exists.
     for (Venue venue : venueList) {
-      if (!venue.getVenueCode().equals(options[0])) {
-        String bookingNotMadeMessage =
-            MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.getMessage(options[0]);
-        System.out.println(bookingNotMadeMessage);
-        validity = false;
-      } else if (venue.getVenueCode().equals(options[0])) {
+      if (venue.getVenueCode().equals(options[0])) {
         venueName = venue.getVenueName();
+        venueCodeExists = true;
       }
+    }
+    if (venueCodeExists == false) {
+      String bookingNotMadeMessage =
+          MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.getMessage(options[0]);
+      System.out.println(bookingNotMadeMessage);
+      validity = false;
     }
     // Check if venue is already booked.
     for (Booking booking : bookingList) {
@@ -249,9 +253,9 @@ public class VenueHireSystem {
       }
     }
     // Adjusting number of attendees according to venue capacity.
-    for (Booking booking : bookingList) {
-      if (booking.getVenueName().equals(venueName)) {
-        int venueCapacity = Integer.parseInt(booking.getVenueCapacity());
+    for (Venue venue : venueList) {
+      if (venue.getVenueName().equals(venueName)) {
+        int venueCapacity = Integer.parseInt(venue.getCapacityInput());
         int attendeeCount = Integer.parseInt(options[3]);
         if (attendeeCount > venueCapacity) {
           String bookingAttendeesAdjustedMessage =
