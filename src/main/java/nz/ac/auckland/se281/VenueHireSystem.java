@@ -260,13 +260,17 @@ public class VenueHireSystem {
         if (attendeeCount > venueCapacity) {
           String bookingAttendeesAdjustedMessage =
               MessageCli.BOOKING_ATTENDEES_ADJUSTED.getMessage(
-                  options[3], String.valueOf(venueCapacity), String.valueOf(venueCapacity));
+                  String.valueOf(options[3]),
+                  String.valueOf(venueCapacity),
+                  String.valueOf(venueCapacity));
           System.out.println(bookingAttendeesAdjustedMessage);
           options[3] = String.valueOf(venueCapacity);
         } else if (attendeeCount < venueCapacity / 4) {
           String bookingAttendeesAdjustedMessage =
               MessageCli.BOOKING_ATTENDEES_ADJUSTED.getMessage(
-                  options[3], String.valueOf(venueCapacity), String.valueOf(venueCapacity / 4));
+                  String.valueOf(options[3]),
+                  String.valueOf(venueCapacity / 4),
+                  String.valueOf(venueCapacity));
           System.out.println(bookingAttendeesAdjustedMessage);
           options[3] = String.valueOf(venueCapacity / 4);
         }
