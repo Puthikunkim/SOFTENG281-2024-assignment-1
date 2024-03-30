@@ -5,6 +5,7 @@ public class Booking {
   private String venueName;
   private String bookingDate;
   private String attendeeCount;
+  private String venueCapacity;
 
   // Constructor for the Venue class
   public Booking(
@@ -30,5 +31,9 @@ public class Booking {
 
   public String getAttendeeCount() {
     return attendeeCount;
+  }
+
+  public String getVenueCapacity() {
+    return venueCapacity;
   }
 }

@@ -8,6 +8,8 @@ public class VenueHireSystem {
 
   // ArrayList to store venues.
   private ArrayList<Venue> venueList = new ArrayList<Venue>();
+  // ArrayList to store bookings.
+  private ArrayList<Booking> bookingList = new ArrayList<Booking>();
   // String to store current system date.
   private String systemDate;
 
@@ -175,7 +177,108 @@ public class VenueHireSystem {
   }
 
   public void makeBooking(String[] options) {
-    // TODO implement this method
+    boolean validity = true;
+    // Check if system date is set.
+    if (systemDate == null) {
+      String bookingNotMadeMessage = MessageCli.BOOKING_NOT_MADE_DATE_NOT_SET.getMessage();
+      System.out.println(bookingNotMadeMessage);
+      validity = false;
+    } else { // Check if booking date is in the past.
+      // Split the system date into day, month and year.
+      String[] systemDateParts = systemDate.split("/");
+      int systemDay = Integer.parseInt(systemDateParts[0]);
+      int systemMonth = Integer.parseInt(systemDateParts[1]);
+      int systemYear = Integer.parseInt(systemDateParts[2]);
+
+      // Split the booking date into day, month and year.
+      String[] bookingDateParts = options[1].split("/");
+      int bookingDay = Integer.parseInt(bookingDateParts[0]);
+      int bookingMonth = Integer.parseInt(bookingDateParts[1]);
+      int bookingYear = Integer.parseInt(bookingDateParts[2]);
+
+      // Past booking date error message.
+      String bookingNotMadeMessage =
+          MessageCli.BOOKING_NOT_MADE_PAST_DATE.getMessage(options[1], systemDate);
+
+      // Check if booking date is in the past.
+      if (bookingYear < systemYear) {
+        // Year check.
+        System.out.println(bookingNotMadeMessage);
+        validity = false;
+      } else {
+        if (bookingMonth < systemMonth) {
+          // Month check.
+          System.out.println(bookingNotMadeMessage);
+          validity = false;
+        } else {
+          // Day check.
+          if (bookingDay < systemDay) {
+            System.out.println(bookingNotMadeMessage);
+            validity = false;
+          }
+        }
+      }
+    }
+
+    // Check if there are no venues.
+    if (venueList.isEmpty()) {
+      String bookingNotMadeMessage = MessageCli.BOOKING_NOT_MADE_NO_VENUES.getMessage();
+      System.out.println(bookingNotMadeMessage);
+      validity = false;
+    }
+    // Variable to store venue name.
+    String venueName = "";
+    // Check if venue code exists.
+    for (Venue venue : venueList) {
+      if (!venue.getVenueCode().equals(options[0])) {
+        String bookingNotMadeMessage =
+            MessageCli.BOOKING_NOT_MADE_VENUE_NOT_FOUND.getMessage(options[0]);
+        System.out.println(bookingNotMadeMessage);
+        validity = false;
+      } else if (venue.getVenueCode().equals(options[0])) {
+        venueName = venue.getVenueName();
+      }
+    }
+    // Check if venue is already booked.
+    for (Booking booking : bookingList) {
+      if (booking.getVenueName().equals(venueName) && booking.getBookingDate().equals(options[1])) {
+        String bookingNotMadeMessage =
+            MessageCli.BOOKING_NOT_MADE_VENUE_ALREADY_BOOKED.getMessage(venueName, options[1]);
+        System.out.println(bookingNotMadeMessage);
+        validity = false;
+      }
+    }
+    // Adjusting number of attendees according to venue capacity.
+    for (Booking booking : bookingList) {
+      if (booking.getVenueName().equals(venueName)) {
+        int venueCapacity = Integer.parseInt(booking.getVenueCapacity());
+        int attendeeCount = Integer.parseInt(options[3]);
+        if (attendeeCount > venueCapacity) {
+          String bookingAttendeesAdjustedMessage =
+              MessageCli.BOOKING_ATTENDEES_ADJUSTED.getMessage(
+                  options[3], String.valueOf(venueCapacity), String.valueOf(venueCapacity));
+          System.out.println(bookingAttendeesAdjustedMessage);
+          options[3] = String.valueOf(venueCapacity);
+        } else if (attendeeCount < venueCapacity / 4) {
+          String bookingAttendeesAdjustedMessage =
+              MessageCli.BOOKING_ATTENDEES_ADJUSTED.getMessage(
+                  options[3], String.valueOf(venueCapacity), String.valueOf(venueCapacity / 4));
+          System.out.println(bookingAttendeesAdjustedMessage);
+          options[3] = String.valueOf(venueCapacity / 4);
+        }
+      }
+    }
+
+    // Successful booking created.
+    if (validity) {
+      String bookingReference = BookingReferenceGenerator.generateBookingReference();
+      String makeBookingSuccessfulMessage =
+          MessageCli.MAKE_BOOKING_SUCCESSFUL.getMessage(
+              bookingReference, venueName, options[1], options[3]);
+      System.out.println(makeBookingSuccessfulMessage);
+      Booking booking = new Booking(bookingReference, venueName, options[1], options[3]);
+      bookingList.add(booking);
+    }
   }
 
   public void printBookings(String venueCode) {
