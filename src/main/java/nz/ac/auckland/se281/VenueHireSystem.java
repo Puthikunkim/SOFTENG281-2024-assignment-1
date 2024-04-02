@@ -284,7 +284,8 @@ public class VenueHireSystem {
           MessageCli.MAKE_BOOKING_SUCCESSFUL.getMessage(
               bookingReference, venueName, options[1], options[3]);
       System.out.println(makeBookingSuccessfulMessage);
-      Booking booking = new Booking(bookingReference, venueName, options[1], options[3]);
+      Booking booking =
+          new Booking(bookingReference, venueName, options[0], options[1], options[2], options[3]);
       bookingList.add(booking);
     }
   }

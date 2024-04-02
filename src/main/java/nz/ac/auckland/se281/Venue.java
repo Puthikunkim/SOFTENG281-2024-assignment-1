@@ -5,6 +5,7 @@ public class Venue {
   private String venueCode;
   private String capacityInput;
   private String hireFeeInput;
+  private String availableDate;
 
   // Constructor for the Venue class
   public Venue(String venueName, String venueCode, String capacityInput, String hireFeeInput) {
@@ -29,5 +30,10 @@ public class Venue {
 
   public String getHireFeeInput() {
     return hireFeeInput;
+  }
+
+  // Setter method for available date
+  public void setAvailableDate(String availableDate) {
+    this.availableDate = availableDate;
   }
 }
