@@ -31,7 +31,7 @@ public class VenueHireSystem {
               venueList.get(0).getVenueCode(),
               venueList.get(0).getCapacityInput(),
               venueList.get(0).getHireFeeInput(),
-              "");
+              venueList.get(0).getAvailableDate());
       System.out.println(venueEntryMessage);
     } else if (venueList.size() > 1 && venueList.size() < 10) {
       // Check for under ten venues.
@@ -73,7 +73,7 @@ public class VenueHireSystem {
                 venueList.get(i).getVenueCode(),
                 venueList.get(i).getCapacityInput(),
                 venueList.get(i).getHireFeeInput(),
-                "");
+                venueList.get(0).getAvailableDate());
         System.out.println(venueEntryMessage);
       }
     } else {
@@ -89,7 +89,7 @@ public class VenueHireSystem {
                 venueList.get(i).getVenueCode(),
                 venueList.get(i).getCapacityInput(),
                 venueList.get(i).getHireFeeInput(),
-                "");
+                venueList.get(0).getAvailableDate());
         System.out.println(venueEntryMessage);
       }
     }
@@ -164,6 +164,10 @@ public class VenueHireSystem {
     systemDate = dateInput;
     String dateSetMessage = MessageCli.DATE_SET.getMessage(dateInput);
     System.out.println(dateSetMessage);
+    // Update next available date for each venue.
+    for (Venue venue : venueList) {
+      updateNextAvailableDate(venue.getVenueCode());
+    }
   }
 
   public void printSystemDate() {
@@ -287,6 +291,90 @@ public class VenueHireSystem {
       Booking booking =
           new Booking(bookingReference, venueName, options[0], options[1], options[2], options[3]);
       bookingList.add(booking);
+      // Update next available date.
+      updateNextAvailableDate(options[0]);
+    }
+  }
+
+  public void updateNextAvailableDate(String venueCode) {
+    String[] systemDateParts = systemDate.split("/");
+    int systemDay = Integer.parseInt(systemDateParts[0]);
+    int systemMonth = Integer.parseInt(systemDateParts[1]);
+    int systemYear = Integer.parseInt(systemDateParts[2]);
+    // Arraylist to store taken dates.
+    ArrayList<String> takenDates = new ArrayList<String>();
+    // Loop through booking list to find taken dates.
+    for (Booking booking : bookingList) {
+      if (booking.getVenueCode().equals(venueCode)) {
+        takenDates.add(booking.getBookingDate());
+      }
+    }
+    // Loop through taken dates to sort them from most current to future, starting from the left and
+    // comparing to the next index date, if the next date is more current then swap them around.
+    for (int i = 0; i < takenDates.size() - 1; i++) {
+      for (int j = i + 1; j < takenDates.size(); j++) {
+        // Creating index i date, the current index date.
+        String[] date1Parts = takenDates.get(i).split("/");
+        int day1 = Integer.parseInt(date1Parts[0]);
+        int month1 = Integer.parseInt(date1Parts[1]);
+        int year1 = Integer.parseInt(date1Parts[2]);
+        Date date1 = new Date(day1, month1, year1);
+        // Creating index j date, the next index date.
+        String[] date2Parts = takenDates.get(j).split("/");
+        int day2 = Integer.parseInt(date2Parts[0]);
+        int month2 = Integer.parseInt(date2Parts[1]);
+        int year2 = Integer.parseInt(date2Parts[2]);
+        Date date2 = new Date(day2, month2, year2);
+        // If index i date is after index j date then swap them around.
+        if (date1.isAfter(date2)) {
+          String temp = takenDates.get(i);
+          takenDates.set(i, takenDates.get(j));
+          takenDates.set(j, temp);
+        }
+      }
+    }
+    // Store current venue of interest.
+    Venue venueOfInterest = null;
+    for (Venue venue : venueList) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        venueOfInterest = venue;
+      }
+    }
+    if (takenDates.size()
+        == 0) { // If there are no bookings for the venue then set the next available date to the
+      // system date.
+      venueOfInterest.setAvailableDate(systemDate);
+    } else if (takenDates.size()
+        > 0) { // If there are bookings for the venue and the current system date is taken then find
+      // the next available date.
+      Date availableDate = new Date(systemDay + 1, systemMonth, systemYear);
+      // Loop through dates to find next available date.
+      while (true) {
+        boolean dateTaken = false;
+        // Loop through taken dates to check if current available date is taken.
+        for (String date : takenDates) {
+          // Split the taken date to check against into day, month and year.
+          String[] checkDateParts = date.split("/");
+          int checkDay = Integer.parseInt(checkDateParts[0]);
+          int checkMonth = Integer.parseInt(checkDateParts[1]);
+          int checkYear = Integer.parseInt(checkDateParts[2]);
+          // Create a date object for the taken date.
+          Date dateToCheckAgainst = new Date(checkDay, checkMonth, checkYear);
+          // If current available date is same as another date then it is taken.
+          if (availableDate.isSame(dateToCheckAgainst)) {
+            dateTaken = true;
+            break;
+          }
+        }
+        // If date is not taken then set it as the next available date.
+        if (!dateTaken) {
+          venueOfInterest.setAvailableDate(availableDate.toString());
+          break;
+        }
+        // If date is taken then increment the day by 1.
+        availableDate =
+            new Date(availableDate.getDay() + 1, availableDate.getMonth(), availableDate.getYear());
+      }
     }
   }
 

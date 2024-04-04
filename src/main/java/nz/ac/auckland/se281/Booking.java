@@ -18,7 +18,9 @@ public class Booking {
       String attendeeCount) {
     this.bookingReference = bookingReference;
     this.venueName = venueName;
+    this.venueCode = venueCode;
     this.bookingDate = bookingDate;
+    this.customerEmail = customerEmail;
     this.attendeeCount = attendeeCount;
   }
 
