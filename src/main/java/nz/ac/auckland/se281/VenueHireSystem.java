@@ -530,6 +530,8 @@ public class VenueHireSystem {
           venueOfInterest = venue;
         }
       }
+      // Cost of venue.
+      int venueFee = Integer.parseInt(venueOfInterest.getHireFeeInput());
       // Find catering service.
       CateringService cateringService = bookingOfInterest.findCateringService();
       // Cost of catering service.
@@ -545,6 +547,8 @@ public class VenueHireSystem {
       // Cost of floral service.
       int floralCost =
           floralService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      // Total cost
+      int totalCost = venueFee + cateringCost + musicCost + floralCost;
       // Get message INVOICE_CONTENT_TOP_HALF
       String invoiceContentTopHalf =
           MessageCli.INVOICE_CONTENT_TOP_HALF.getMessage(
@@ -556,7 +560,7 @@ public class VenueHireSystem {
               bookingOfInterest.getVenueName());
       // Get message INVOICE_CONTENT_VENUE_FEE
       String invoiceContentVenueFee =
-          MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(venueOfInterest.getHireFeeInput());
+          MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(String.valueOf(venueFee));
       // Get message INVOICE_CONTENT_CATERING_ENTRY
       String invoiceContentCateringEntry =
           MessageCli.INVOICE_CONTENT_CATERING_ENTRY.getMessage(
@@ -569,7 +573,8 @@ public class VenueHireSystem {
           MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.getMessage(
               floralService.getFloralTypeName(), String.valueOf(floralCost));
       // Get message INVOICE_CONTENT_BOTTOM_HALF
-      String invoiceContentBottomHalf = MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage();
+      String invoiceContentBottomHalf =
+          MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage(String.valueOf(totalCost));
       // Print invoice
       System.out.println(invoiceContentTopHalf);
       System.out.println(invoiceContentVenueFee);
