@@ -28,18 +28,18 @@ public class Date {
 
   // method to compare if a date is after another
   public boolean isAfter(Date other) {
-    if (this.year > other.getYear()) {
+    if (this.year > other.getYear()) { // check if year is greater than other year
       return true;
     } else if (this.year == other.getYear()) {
-      if (this.month > other.getMonth()) {
+      if (this.month > other.getMonth()) { // check if month is greater than other month
         return true;
       } else if (this.month == other.getMonth()) {
-        if (this.day > other.getDay()) {
+        if (this.day > other.getDay()) { // check if day is greater than other day
           return true;
         }
       }
     }
-    return false;
+    return false; // return false if none of the above conditions are met
   }
 
   // method to compare if a date is the same as another
