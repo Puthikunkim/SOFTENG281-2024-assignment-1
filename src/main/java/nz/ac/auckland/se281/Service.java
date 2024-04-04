@@ -1,7 +1,5 @@
 package nz.ac.auckland.se281;
 
-import java.util.ArrayList;
-
 public abstract class Service {
   protected String serviceName;
   protected int cost;
@@ -31,24 +29,11 @@ public abstract class Service {
     this.serviceName = serviceName;
   }
 
-  // Method to check if booking reference exists from the booking list
-  public boolean bookingExists(ArrayList<Booking> bookingList, String bookingReference) {
-    for (Booking booking : bookingList) {
-      if (booking.getBookingReference().equals(bookingReference)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  // Method to return service as a string
-  @Override
-  public String toString() {
-    return serviceName + " - $" + cost;
-  }
-
   // method to add service to booking list
   public void addService(Booking booking) {
     booking.getServiceList().add(this);
   }
+
+  // method to calculate the cost of the service
+  public abstract int calculateCost(int attendeeCount);
 }
