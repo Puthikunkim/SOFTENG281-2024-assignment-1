@@ -532,21 +532,33 @@ public class VenueHireSystem {
       }
       // Cost of venue.
       int venueFee = Integer.parseInt(venueOfInterest.getHireFeeInput());
+
       // Find catering service.
       CateringService cateringService = bookingOfInterest.findCateringService();
       // Cost of catering service.
-      int cateringCost =
-          cateringService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      int cateringCost = 0;
+      if (cateringService != null) {
+        cateringCost =
+            cateringService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      }
+
       // Find music service.
       MusicService musicService = bookingOfInterest.findMusicService();
       // Cost of music service.
-      int musicCost =
-          musicService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      int musicCost = 0;
+      if (musicService != null) {
+        musicCost =
+            musicService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      }
+
       // Find floral service.
       FloralService floralService = bookingOfInterest.findFloralService();
       // Cost of floral service.
-      int floralCost =
-          floralService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      int floralCost = 0;
+      if (floralService != null) {
+        floralCost =
+            floralService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      }
       // Total cost
       int totalCost = venueFee + cateringCost + musicCost + floralCost;
       // Get message INVOICE_CONTENT_TOP_HALF
