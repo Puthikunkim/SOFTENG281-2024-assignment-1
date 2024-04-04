@@ -37,4 +37,9 @@ public class FloralService extends Service {
   public void addService(Booking booking) {
     booking.getServiceList().add(this);
   }
+
+  // method to multiply the cost of the catering service by the number of attendees
+  public int calculateCost(int attendeeCount) {
+    return this.getCost();
+  }
 }

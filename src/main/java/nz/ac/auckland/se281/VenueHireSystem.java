@@ -525,13 +525,26 @@ public class VenueHireSystem {
     } else {
       // Store current venue of interest and check if venue exists.
       Venue venueOfInterest = null;
-      boolean venueExists = false;
       for (Venue venue : venueList) {
         if (venue.getVenueCode().equals(bookingOfInterest.getVenueCode())) {
           venueOfInterest = venue;
-          venueExists = true;
         }
       }
+      // Find catering service.
+      CateringService cateringService = bookingOfInterest.findCateringService();
+      // Cost of catering service.
+      int cateringCost =
+          cateringService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      // Find music service.
+      MusicService musicService = bookingOfInterest.findMusicService();
+      // Cost of music service.
+      int musicCost =
+          musicService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
+      // Find floral service.
+      FloralService floralService = bookingOfInterest.findFloralService();
+      // Cost of floral service.
+      int floralCost =
+          floralService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
       // Get message INVOICE_CONTENT_TOP_HALF
       String invoiceContentTopHalf =
           MessageCli.INVOICE_CONTENT_TOP_HALF.getMessage(
@@ -543,12 +556,26 @@ public class VenueHireSystem {
               bookingOfInterest.getVenueName());
       // Get message INVOICE_CONTENT_VENUE_FEE
       String invoiceContentVenueFee =
-          MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(bookingOfInterest.getVenueFee());
+          MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(venueOfInterest.getHireFeeInput());
+      // Get message INVOICE_CONTENT_CATERING_ENTRY
+      String invoiceContentCateringEntry =
+          MessageCli.INVOICE_CONTENT_CATERING_ENTRY.getMessage(
+              cateringService.getCateringTypeName(), String.valueOf(cateringCost));
+      // Get message INVOICE_CONTENT_MUSIC_ENTRY
+      String invoiceContentMusicEntry =
+          MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.getMessage(String.valueOf(musicCost));
+      // Get message INVOICE_CONTENT_FLORAL_ENTRY
+      String invoiceContentFloralEntry =
+          MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.getMessage(
+              floralService.getFloralTypeName(), String.valueOf(floralCost));
       // Get message INVOICE_CONTENT_BOTTOM_HALF
       String invoiceContentBottomHalf = MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage();
       // Print invoice
       System.out.println(invoiceContentTopHalf);
-      System.out.println(bookingOfInterest.toString());
+      System.out.println(invoiceContentVenueFee);
+      System.out.println(invoiceContentCateringEntry);
+      System.out.println(invoiceContentMusicEntry);
+      System.out.println(invoiceContentFloralEntry);
       System.out.println(invoiceContentBottomHalf);
     }
   }
