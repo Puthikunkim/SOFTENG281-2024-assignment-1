@@ -445,6 +445,7 @@ public class VenueHireSystem {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
         bookingOfInterest = booking;
+        break;
       }
     }
     if (bookingExists == false) {
@@ -472,6 +473,7 @@ public class VenueHireSystem {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
         bookingOfInterest = booking;
+        break;
       }
     }
     if (bookingExists == false) {
@@ -493,6 +495,7 @@ public class VenueHireSystem {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
         bookingOfInterest = booking;
+        break;
       }
     }
     if (bookingExists == false) {
@@ -573,26 +576,32 @@ public class VenueHireSystem {
       // Get message INVOICE_CONTENT_VENUE_FEE
       String invoiceContentVenueFee =
           MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(String.valueOf(venueFee));
-      // Get message INVOICE_CONTENT_CATERING_ENTRY
-      String invoiceContentCateringEntry =
-          MessageCli.INVOICE_CONTENT_CATERING_ENTRY.getMessage(
-              cateringService.getCateringTypeName(), String.valueOf(cateringCost));
-      // Get message INVOICE_CONTENT_MUSIC_ENTRY
-      String invoiceContentMusicEntry =
-          MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.getMessage(String.valueOf(musicCost));
-      // Get message INVOICE_CONTENT_FLORAL_ENTRY
-      String invoiceContentFloralEntry =
-          MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.getMessage(
-              floralService.getFloralTypeName(), String.valueOf(floralCost));
       // Get message INVOICE_CONTENT_BOTTOM_HALF
       String invoiceContentBottomHalf =
           MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage(String.valueOf(totalCost));
       // Print invoice
       System.out.println(invoiceContentTopHalf);
       System.out.println(invoiceContentVenueFee);
-      System.out.println(invoiceContentCateringEntry);
-      System.out.println(invoiceContentMusicEntry);
-      System.out.println(invoiceContentFloralEntry);
+      // Get message INVOICE_CONTENT_CATERING_ENTRY
+      if (cateringService != null) {
+        String invoiceContentCateringEntry =
+            MessageCli.INVOICE_CONTENT_CATERING_ENTRY.getMessage(
+                cateringService.getCateringTypeName(), String.valueOf(cateringCost));
+        System.out.println(invoiceContentCateringEntry);
+      }
+      // Get message INVOICE_CONTENT_MUSIC_ENTRY
+      if (musicService != null) {
+        String invoiceContentMusicEntry =
+            MessageCli.INVOICE_CONTENT_MUSIC_ENTRY.getMessage(String.valueOf(musicCost));
+        System.out.println(invoiceContentMusicEntry);
+      }
+      // Get message INVOICE_CONTENT_FLORAL_ENTRY
+      if (floralService != null) {
+        String invoiceContentFloralEntry =
+            MessageCli.INVOICE_CONTENT_FLORAL_ENTRY.getMessage(
+                floralService.getFloralTypeName(), String.valueOf(floralCost));
+        System.out.println(invoiceContentFloralEntry);
+      }
       System.out.println(invoiceContentBottomHalf);
     }
   }

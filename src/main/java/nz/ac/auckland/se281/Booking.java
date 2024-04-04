@@ -28,6 +28,7 @@ public class Booking {
     this.bookingDate = bookingDate;
     this.customerEmail = customerEmail;
     this.attendeeCount = attendeeCount;
+    this.dateOfBooking = dateOfBooking;
     this.serviceList = new ArrayList<Service>();
   }
 
