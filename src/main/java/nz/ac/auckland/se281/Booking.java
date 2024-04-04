@@ -1,5 +1,7 @@
 package nz.ac.auckland.se281;
 
+import java.util.ArrayList;
+
 public class Booking {
   private String bookingReference;
   private String venueName;
@@ -7,6 +9,8 @@ public class Booking {
   private String bookingDate;
   private String customerEmail;
   private String attendeeCount;
+  // ArrayList to store services.
+  private ArrayList<Service> serviceList = new ArrayList<Service>();
 
   // Constructor for the Venue class
   public Booking(
@@ -22,6 +26,7 @@ public class Booking {
     this.bookingDate = bookingDate;
     this.customerEmail = customerEmail;
     this.attendeeCount = attendeeCount;
+    this.serviceList = new ArrayList<Service>();
   }
 
   // Getter methods for the values
@@ -47,5 +52,10 @@ public class Booking {
 
   public String getAttendeeCount() {
     return attendeeCount;
+  }
+
+  // Getter method for service list
+  public ArrayList<Service> getServiceList() {
+    return serviceList;
   }
 }

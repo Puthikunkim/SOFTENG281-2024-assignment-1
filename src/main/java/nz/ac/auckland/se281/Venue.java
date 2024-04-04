@@ -1,6 +1,5 @@
 package nz.ac.auckland.se281;
 
-import java.util.List;
 
 public class Venue {
   private String venueName;
@@ -45,14 +44,5 @@ public class Venue {
   // Setter method for available date
   public void setAvailableDate(String availableDate) {
     this.availableDate = availableDate;
-  }
-
-  public Venue findVenueByCode(List<Venue> venueList, String venueCode) {
-    for (Venue venue : venueList) {
-      if (venue.getVenueCode().equals(venueCode)) {
-        return venue;
-      }
-    }
-    return null; // return null if no venue is found
   }
 }

@@ -430,11 +430,53 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // TODO implement this method
+    // Check if booking reference exists.
+    boolean bookingExists = false;
+    // Store booking of interest
+    Booking bookingOfInterest = null;
+    for (Booking booking : bookingList) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingExists = true;
+        bookingOfInterest = booking;
+      }
+    }
+    if (bookingExists == false) {
+      String serviceNotAddedMessage =
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage(
+              "Catering service", bookingReference);
+      System.out.println(serviceNotAddedMessage);
+    } else { // If booking reference exists then add catering service.
+      CateringService cateringservice =
+          new CateringService(
+              "Catering",
+              cateringType.getCostPerPerson(),
+              cateringType.getName(),
+              cateringType,
+              bookingReference);
+      cateringservice.addService(bookingOfInterest);
+    }
   }
 
   public void addServiceMusic(String bookingReference) {
-    // TODO implement this method
+    // Check if booking reference exists.
+    boolean bookingExists = false;
+    // Store booking of interest
+    Booking bookingOfInterest = null;
+    for (Booking booking : bookingList) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingExists = true;
+        bookingOfInterest = booking;
+      }
+    }
+    if (bookingExists == false) {
+      String serviceNotAddedMessage =
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage(
+              "Music service", bookingReference);
+      System.out.println(serviceNotAddedMessage);
+    } else {
+      MusicService musicService = new MusicService("Music", 100, bookingReference);
+      musicService.addService(bookingOfInterest);
+    }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
