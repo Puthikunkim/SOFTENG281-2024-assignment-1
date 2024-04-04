@@ -289,7 +289,14 @@ public class VenueHireSystem {
               bookingReference, venueName, options[1], options[3]);
       System.out.println(makeBookingSuccessfulMessage);
       Booking booking =
-          new Booking(bookingReference, venueName, options[0], options[1], options[2], options[3]);
+          new Booking(
+              bookingReference,
+              venueName,
+              options[0],
+              options[1],
+              options[2],
+              options[3],
+              systemDate);
       bookingList.add(booking);
       // Update next available date.
       updateNextAvailableDate(options[0]);
@@ -512,12 +519,31 @@ public class VenueHireSystem {
       }
     }
     if (bookingExists == false) {
-      String serviceNotAddedMessage =
-          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Floral", bookingReference);
-      System.out.println(serviceNotAddedMessage);
+      String invoiceNotPrintedMessage =
+          MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.getMessage(bookingReference);
+      System.out.println(invoiceNotPrintedMessage);
     } else {
+      // Store current venue of interest and check if venue exists.
+      Venue venueOfInterest = null;
+      boolean venueExists = false;
+      for (Venue venue : venueList) {
+        if (venue.getVenueCode().equals(bookingOfInterest.getVenueCode())) {
+          venueOfInterest = venue;
+          venueExists = true;
+        }
+      }
       // Get message INVOICE_CONTENT_TOP_HALF
-      String invoiceContentTopHalf = MessageCli.INVOICE_CONTENT_TOP_HALF.getMessage();
+      String invoiceContentTopHalf =
+          MessageCli.INVOICE_CONTENT_TOP_HALF.getMessage(
+              bookingReference,
+              bookingOfInterest.getCustomerEmail(),
+              bookingOfInterest.getDateOfBooking(),
+              bookingOfInterest.getBookingDate(),
+              bookingOfInterest.getAttendeeCount(),
+              bookingOfInterest.getVenueName());
+      // Get message INVOICE_CONTENT_VENUE_FEE
+      String invoiceContentVenueFee =
+          MessageCli.INVOICE_CONTENT_VENUE_FEE.getMessage(bookingOfInterest.getVenueFee());
       // Get message INVOICE_CONTENT_BOTTOM_HALF
       String invoiceContentBottomHalf = MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage();
       // Print invoice

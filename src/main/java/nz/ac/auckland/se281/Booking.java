@@ -9,6 +9,7 @@ public class Booking {
   private String bookingDate;
   private String customerEmail;
   private String attendeeCount;
+  private String dateOfBooking;
   // ArrayList to store services.
   private ArrayList<Service> serviceList = new ArrayList<Service>();
 
@@ -19,7 +20,8 @@ public class Booking {
       String venueCode,
       String bookingDate,
       String customerEmail,
-      String attendeeCount) {
+      String attendeeCount,
+      String dateOfBooking) {
     this.bookingReference = bookingReference;
     this.venueName = venueName;
     this.venueCode = venueCode;
@@ -52,6 +54,10 @@ public class Booking {
 
   public String getAttendeeCount() {
     return attendeeCount;
+  }
+
+  public String getDateOfBooking() {
+    return dateOfBooking;
   }
 
   // Getter method for service list
