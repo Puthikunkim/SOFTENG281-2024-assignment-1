@@ -7,4 +7,9 @@ public class MusicService extends Service {
         MessageCli.ADD_SERVICE_SUCCESSFUL.getMessage(serviceName, bookingReference);
     System.out.println(addServiceSuccessfulMessage);
   }
+
+  // method to add service to booking list
+  public void addService(Booking booking) {
+    booking.getServiceList().add(this);
+  }
 }

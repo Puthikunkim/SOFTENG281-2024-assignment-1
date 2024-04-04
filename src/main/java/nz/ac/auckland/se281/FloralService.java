@@ -15,6 +15,8 @@ public class FloralService extends Service {
       FloralType floralType,
       String bookingReference) {
     super(serviceName, cost);
+    this.floralType = floralType;
+    this.floralTypeName = floralTypeName;
     String addServiceSuccessfulMessage =
         MessageCli.ADD_SERVICE_SUCCESSFUL.getMessage(
             "Floral" + " (" + floralTypeName + ")", bookingReference);
@@ -29,5 +31,10 @@ public class FloralService extends Service {
   // Getter method for the floral type
   public FloralType getFloralType() {
     return floralType;
+  }
+
+  // method to add service to booking list
+  public void addService(Booking booking) {
+    booking.getServiceList().add(this);
   }
 }

@@ -445,14 +445,14 @@ public class VenueHireSystem {
           MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Catering", bookingReference);
       System.out.println(serviceNotAddedMessage);
     } else { // If booking reference exists then add catering service.
-      CateringService cateringservice =
+      CateringService cateringService =
           new CateringService(
               "Catering",
               cateringType.getCostPerPerson(),
               cateringType.getName(),
               cateringType,
               bookingReference);
-      cateringservice.addService(bookingOfInterest);
+      cateringService.addService(bookingOfInterest);
     }
   }
 
@@ -501,6 +501,29 @@ public class VenueHireSystem {
   }
 
   public void viewInvoice(String bookingReference) {
-    // TODO implement this method
+    // Check if booking reference exists.
+    boolean bookingExists = false;
+    // Store booking of interest
+    Booking bookingOfInterest = null;
+    for (Booking booking : bookingList) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingExists = true;
+        bookingOfInterest = booking;
+      }
+    }
+    if (bookingExists == false) {
+      String serviceNotAddedMessage =
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Floral", bookingReference);
+      System.out.println(serviceNotAddedMessage);
+    } else {
+      // Get message INVOICE_CONTENT_TOP_HALF
+      String invoiceContentTopHalf = MessageCli.INVOICE_CONTENT_TOP_HALF.getMessage();
+      // Get message INVOICE_CONTENT_BOTTOM_HALF
+      String invoiceContentBottomHalf = MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage();
+      // Print invoice
+      System.out.println(invoiceContentTopHalf);
+      System.out.println(bookingOfInterest.toString());
+      System.out.println(invoiceContentBottomHalf);
+    }
   }
 }
