@@ -73,7 +73,7 @@ public class VenueHireSystem {
                 venueList.get(i).getVenueCode(),
                 venueList.get(i).getCapacityInput(),
                 venueList.get(i).getHireFeeInput(),
-                venueList.get(0).getAvailableDate());
+                venueList.get(i).getAvailableDate());
         System.out.println(venueEntryMessage);
       }
     } else {
@@ -89,7 +89,7 @@ public class VenueHireSystem {
                 venueList.get(i).getVenueCode(),
                 venueList.get(i).getCapacityInput(),
                 venueList.get(i).getHireFeeInput(),
-                venueList.get(0).getAvailableDate());
+                venueList.get(i).getAvailableDate());
         System.out.println(venueEntryMessage);
       }
     }
@@ -347,7 +347,7 @@ public class VenueHireSystem {
     } else if (takenDates.size()
         > 0) { // If there are bookings for the venue and the current system date is taken then find
       // the next available date.
-      Date availableDate = new Date(systemDay + 1, systemMonth, systemYear);
+      Date availableDate = new Date(systemDay, systemMonth, systemYear);
       // Loop through dates to find next available date.
       while (true) {
         boolean dateTaken = false;
@@ -370,12 +370,15 @@ public class VenueHireSystem {
         if (!dateTaken) {
           venueOfInterest.setAvailableDate(availableDate.toString());
           break;
+        } else if (dateTaken) {
+          // If date is taken then increment the day by 1.
+          availableDate =
+              new Date(
+                  availableDate.getDay() + 1, availableDate.getMonth(), availableDate.getYear());
         }
-        // If date is taken then increment the day by 1.
-        availableDate =
-            new Date(availableDate.getDay() + 1, availableDate.getMonth(), availableDate.getYear());
       }
     }
+    System.out.println(systemDate);
   }
 
   public void printBookings(String venueCode) {

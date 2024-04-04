@@ -51,6 +51,14 @@ public class Date {
   // method to return date as a string in format dd/mm/yyyy
   @Override
   public String toString() {
-    return day + "/" + month + "/" + year;
+    if (day < 10) {
+      return "0" + day + "/" + month + "/" + year;
+    } else if (month < 10) {
+      return day + "/0" + month + "/" + year;
+    } else if (day < 10 && month < 10) {
+      return "0" + day + "/0" + month + "/" + year;
+    } else {
+      return day + "/" + month + "/" + year;
+    }
   }
 }
