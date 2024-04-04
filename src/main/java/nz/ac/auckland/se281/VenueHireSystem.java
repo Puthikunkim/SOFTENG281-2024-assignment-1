@@ -442,8 +442,7 @@ public class VenueHireSystem {
     }
     if (bookingExists == false) {
       String serviceNotAddedMessage =
-          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage(
-              "Catering service", bookingReference);
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Catering", bookingReference);
       System.out.println(serviceNotAddedMessage);
     } else { // If booking reference exists then add catering service.
       CateringService cateringservice =
@@ -470,8 +469,7 @@ public class VenueHireSystem {
     }
     if (bookingExists == false) {
       String serviceNotAddedMessage =
-          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage(
-              "Music service", bookingReference);
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Music", bookingReference);
       System.out.println(serviceNotAddedMessage);
     } else {
       MusicService musicService = new MusicService("Music", 100, bookingReference);
