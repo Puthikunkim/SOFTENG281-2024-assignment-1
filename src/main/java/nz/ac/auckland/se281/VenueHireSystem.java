@@ -378,11 +378,55 @@ public class VenueHireSystem {
         }
       }
     }
-    System.out.println(systemDate);
   }
 
   public void printBookings(String venueCode) {
-    // TODO implement this method
+    // Check if there are no venues, same message as if the venue doesn't exist.
+    if (venueList.isEmpty()) {
+      String venueNotFoundMessage = MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.getMessage(venueCode);
+      System.out.println(venueNotFoundMessage);
+      return;
+    }
+    // Store current venue of interest and check if venue exists.
+    Venue venueOfInterest = null;
+    boolean venueExists = false;
+    for (Venue venue : venueList) {
+      if (venue.getVenueCode().equals(venueCode)) {
+        venueOfInterest = venue;
+        venueExists = true;
+      }
+    }
+    if (venueExists == false) {
+      String venueNotFoundMessage = MessageCli.PRINT_BOOKINGS_VENUE_NOT_FOUND.getMessage(venueCode);
+      System.out.println(venueNotFoundMessage);
+      return;
+    }
+
+    // Create an arraylist to store bookings for the venue.
+    ArrayList<Booking> particularBooking = new ArrayList<Booking>();
+    for (Booking booking : bookingList) {
+      if (booking.getVenueCode().equals(venueCode)) {
+        particularBooking.add(booking);
+      }
+    }
+
+    String bookingsHeader =
+        MessageCli.PRINT_BOOKINGS_HEADER.getMessage(venueOfInterest.getVenueName());
+    // Check if there are no bookings.
+    if (particularBooking.isEmpty() && venueExists == true) {
+      String noBookingsMessage =
+          MessageCli.PRINT_BOOKINGS_NONE.getMessage(venueOfInterest.getVenueName());
+      System.out.println(bookingsHeader);
+      System.out.println(noBookingsMessage);
+    } else if (particularBooking.size() > 0 && venueExists == true) {
+      System.out.println(bookingsHeader);
+      for (Booking booking : particularBooking) {
+        String bookingsEntry =
+            MessageCli.PRINT_BOOKINGS_ENTRY.getMessage(
+                booking.getBookingReference(), booking.getBookingDate());
+        System.out.println(bookingsEntry);
+      }
+    }
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
