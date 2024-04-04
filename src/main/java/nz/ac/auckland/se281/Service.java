@@ -2,7 +2,7 @@ package nz.ac.auckland.se281;
 
 import java.util.ArrayList;
 
-public class Service {
+public abstract class Service {
   protected String serviceName;
   protected int cost;
 

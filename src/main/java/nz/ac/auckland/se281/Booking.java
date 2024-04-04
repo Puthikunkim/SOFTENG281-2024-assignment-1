@@ -64,4 +64,32 @@ public class Booking {
   public ArrayList<Service> getServiceList() {
     return serviceList;
   }
+
+  // Finding the different services.
+  public CateringService findCateringService() {
+    for (Service service : serviceList) {
+      if (service instanceof CateringService) {
+        return (CateringService) service;
+      }
+    }
+    return null;
+  }
+
+  public MusicService findMusicService() {
+    for (Service service : serviceList) {
+      if (service instanceof MusicService) {
+        return (MusicService) service;
+      }
+    }
+    return null;
+  }
+
+  public FloralService findFloralService() {
+    for (Service service : serviceList) {
+      if (service instanceof FloralService) {
+        return (FloralService) service;
+      }
+    }
+    return null;
+  }
 }
