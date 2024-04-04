@@ -471,14 +471,33 @@ public class VenueHireSystem {
       String serviceNotAddedMessage =
           MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Music", bookingReference);
       System.out.println(serviceNotAddedMessage);
-    } else {
-      MusicService musicService = new MusicService("Music", 100, bookingReference);
+    } else { // If booking reference exists then add music service.
+      MusicService musicService = new MusicService("Music", 500, bookingReference);
       musicService.addService(bookingOfInterest);
     }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // TODO implement this method
+    // Check if booking reference exists.
+    boolean bookingExists = false;
+    // Store booking of interest
+    Booking bookingOfInterest = null;
+    for (Booking booking : bookingList) {
+      if (booking.getBookingReference().equals(bookingReference)) {
+        bookingExists = true;
+        bookingOfInterest = booking;
+      }
+    }
+    if (bookingExists == false) {
+      String serviceNotAddedMessage =
+          MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Floral", bookingReference);
+      System.out.println(serviceNotAddedMessage);
+    } else {
+      FloralService floralService =
+          new FloralService(
+              "Floral", floralType.getCost(), floralType.getName(), floralType, bookingReference);
+      floralService.addService(bookingOfInterest);
+    }
   }
 
   public void viewInvoice(String bookingReference) {
