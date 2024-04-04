@@ -1,6 +1,7 @@
 package nz.ac.auckland.se281;
 
 public class Date {
+  // fields
   private int day;
   private int month;
   private int year;
@@ -51,13 +52,13 @@ public class Date {
   // method to return date as a string in format dd/mm/yyyy
   @Override
   public String toString() {
+    // check if day is less than 10 and add 0 if true
     if (day < 10 && month >= 10) {
       return "0" + day + "/" + month + "/" + year;
-    } else if (day >= 10 && month < 10) {
+    } else if (day >= 10 && month < 10) { // check if month is less than 10 and add 0 if true
       return day + "/0" + month + "/" + year;
-    } else if (day < 10 && month < 10) {
-      return "0" + day + "/0" + month + "/" + year;
-    } else if (day < 10 && month < 10) {
+    } else if (day < 10
+        && month < 10) { // check if day and month are less than 10 and add 0 if true
       return "0" + day + "/0" + month + "/" + year;
     } else {
       return day + "/" + month + "/" + year;
