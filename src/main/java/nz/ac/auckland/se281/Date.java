@@ -1,7 +1,7 @@
 package nz.ac.auckland.se281;
 
 public class Date {
-  // fields
+  // Variables for the Date class
   private int day;
   private int month;
   private int year;
@@ -28,6 +28,7 @@ public class Date {
 
   // method to compare if a date is after another
   public boolean isAfter(Date other) {
+    // Check if date is after other date
     if (this.year > other.getYear()) { // check if year is greater than other year
       return true;
     } else if (this.year == other.getYear()) {
@@ -39,7 +40,7 @@ public class Date {
         }
       }
     }
-    return false; // return false if none of the above conditions are met
+    return false; // return false if date is not after other date.
   }
 
   // method to compare if a date is the same as another

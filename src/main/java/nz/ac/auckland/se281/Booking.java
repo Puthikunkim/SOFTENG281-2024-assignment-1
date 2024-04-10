@@ -3,6 +3,7 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 public class Booking {
+  // Variables for the Booking class.
   private String bookingReference;
   private String venueName;
   private String venueCode;
