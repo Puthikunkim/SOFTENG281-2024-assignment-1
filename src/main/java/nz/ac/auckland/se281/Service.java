@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 
 public abstract class Service {
+
+  // Variables for the service class
   protected String serviceName;
   protected int cost;
 
@@ -11,29 +13,15 @@ public abstract class Service {
   }
 
   // Getter methods for the values
-  public String getServiceName() {
-    return serviceName;
-  }
-
   public int getCost() {
     return cost;
   }
 
-  // Setter method for the cost
-  public void setCost(int cost) {
-    this.cost = cost;
-  }
-
-  // Setter method for the service name
-  public void setServiceName(String serviceName) {
-    this.serviceName = serviceName;
-  }
-
   // method to add service to booking list
-  public void addService(Booking booking) {
+  public void addServiceToBooking(Booking booking) {
     booking.getServiceList().add(this);
   }
 
-  // method to calculate the cost of the service
+  // Abstract method to calculate the cost of each type of service.
   public abstract int calculateCost(int attendeeCount);
 }

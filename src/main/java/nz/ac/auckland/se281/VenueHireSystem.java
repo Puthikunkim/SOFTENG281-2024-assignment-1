@@ -458,7 +458,7 @@ public class VenueHireSystem {
     } else if (particularBooking.size() > 0
         && venueExists
             == true) { // If venue exists and there are bookings for the venue output appropriate
-                       // message.
+      // message.
       // Bookings header for the venue and will print if it passes all previous checks.
       String bookingsHeader =
           MessageCli.PRINT_BOOKINGS_HEADER.getMessage(venueOfInterest.getVenueName());
@@ -474,10 +474,11 @@ public class VenueHireSystem {
   }
 
   public void addCateringService(String bookingReference, CateringType cateringType) {
-    // Check if booking reference exists.
+    // Variable to check if booking reference exists.
     boolean bookingExists = false;
     // Store booking of interest
     Booking bookingOfInterest = null;
+    // Loop through booking list to find booking of interest.
     for (Booking booking : bookingList) {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
@@ -485,6 +486,8 @@ public class VenueHireSystem {
         break;
       }
     }
+
+    // If booking reference does not exist then print error message.
     if (bookingExists == false) {
       String serviceNotAddedMessage =
           MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Catering", bookingReference);
@@ -495,17 +498,17 @@ public class VenueHireSystem {
               "Catering",
               cateringType.getCostPerPerson(),
               cateringType.getName(),
-              cateringType,
               bookingReference);
-      cateringService.addService(bookingOfInterest);
+      cateringService.addServiceToBooking(bookingOfInterest);
     }
   }
 
   public void addServiceMusic(String bookingReference) {
-    // Check if booking reference exists.
+    // Variable to check if booking reference exists.
     boolean bookingExists = false;
     // Store booking of interest
     Booking bookingOfInterest = null;
+    // Loop through booking list to find booking of interest.
     for (Booking booking : bookingList) {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
@@ -513,21 +516,24 @@ public class VenueHireSystem {
         break;
       }
     }
+
+    // If booking reference does not exist then print error message.
     if (bookingExists == false) {
       String serviceNotAddedMessage =
           MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Music", bookingReference);
       System.out.println(serviceNotAddedMessage);
     } else { // If booking reference exists then add music service.
       MusicService musicService = new MusicService("Music", 500, bookingReference);
-      musicService.addService(bookingOfInterest);
+      musicService.addServiceToBooking(bookingOfInterest);
     }
   }
 
   public void addServiceFloral(String bookingReference, FloralType floralType) {
-    // Check if booking reference exists.
+    // Variable to check if booking reference exists.
     boolean bookingExists = false;
     // Store booking of interest
     Booking bookingOfInterest = null;
+    // Loop through booking list to find booking of interest.
     for (Booking booking : bookingList) {
       if (booking.getBookingReference().equals(bookingReference)) {
         bookingExists = true;
@@ -535,15 +541,16 @@ public class VenueHireSystem {
         break;
       }
     }
+
+    // If booking reference does not exist then print error message.
     if (bookingExists == false) {
       String serviceNotAddedMessage =
           MessageCli.SERVICE_NOT_ADDED_BOOKING_NOT_FOUND.getMessage("Floral", bookingReference);
       System.out.println(serviceNotAddedMessage);
-    } else {
+    } else { // If booking reference exists then add floral service.
       FloralService floralService =
-          new FloralService(
-              "Floral", floralType.getCost(), floralType.getName(), floralType, bookingReference);
-      floralService.addService(bookingOfInterest);
+          new FloralService("Floral", floralType.getCost(), floralType.getName(), bookingReference);
+      floralService.addServiceToBooking(bookingOfInterest);
     }
   }
 
@@ -558,11 +565,14 @@ public class VenueHireSystem {
         bookingOfInterest = booking;
       }
     }
+
+    // If booking reference does not exist then print error message.
     if (bookingExists == false) {
       String invoiceNotPrintedMessage =
           MessageCli.VIEW_INVOICE_BOOKING_NOT_FOUND.getMessage(bookingReference);
       System.out.println(invoiceNotPrintedMessage);
     } else {
+
       // Store current venue of interest and check if venue exists.
       Venue venueOfInterest = null;
       for (Venue venue : venueList) {
@@ -570,6 +580,7 @@ public class VenueHireSystem {
           venueOfInterest = venue;
         }
       }
+
       // Cost of venue.
       int venueFee = Integer.parseInt(venueOfInterest.getHireFeeInput());
 
@@ -599,6 +610,7 @@ public class VenueHireSystem {
         floralCost =
             floralService.calculateCost(Integer.parseInt(bookingOfInterest.getAttendeeCount()));
       }
+
       // Total cost
       int totalCost = venueFee + cateringCost + musicCost + floralCost;
       // Get message INVOICE_CONTENT_TOP_HALF
@@ -616,9 +628,11 @@ public class VenueHireSystem {
       // Get message INVOICE_CONTENT_BOTTOM_HALF
       String invoiceContentBottomHalf =
           MessageCli.INVOICE_CONTENT_BOTTOM_HALF.getMessage(String.valueOf(totalCost));
+
       // Print invoice
       System.out.println(invoiceContentTopHalf);
       System.out.println(invoiceContentVenueFee);
+
       // Get message INVOICE_CONTENT_CATERING_ENTRY
       if (cateringService != null) {
         String invoiceContentCateringEntry =

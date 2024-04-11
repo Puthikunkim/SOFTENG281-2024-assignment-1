@@ -1,22 +1,17 @@
 package nz.ac.auckland.se281;
 
-import nz.ac.auckland.se281.Types.FloralType;
-
 public class FloralService extends Service {
-  // fields
+
+  // Variables for the FloralService class
   private String floralTypeName;
-  private FloralType floralType;
 
   // Constructor for the FloralService class
   public FloralService(
-      String serviceName,
-      int cost,
-      String floralTypeName,
-      FloralType floralType,
-      String bookingReference) {
+      String serviceName, int cost, String floralTypeName, String bookingReference) {
     super(serviceName, cost);
-    this.floralType = floralType;
     this.floralTypeName = floralTypeName;
+
+    // Print successful service added to booking message
     String addServiceSuccessfulMessage =
         MessageCli.ADD_SERVICE_SUCCESSFUL.getMessage(
             serviceName + " (" + floralTypeName + ")", bookingReference);
@@ -28,12 +23,8 @@ public class FloralService extends Service {
     return floralTypeName;
   }
 
-  // Getter method for the floral type
-  public FloralType getFloralType() {
-    return floralType;
-  }
-
-  // method to multiply the cost of the catering service by the number of attendees
+  // Method to return the cost of the specific floral service
+  @Override
   public int calculateCost(int attendeeCount) {
     return this.getCost();
   }

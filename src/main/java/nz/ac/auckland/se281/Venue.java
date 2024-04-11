@@ -1,6 +1,8 @@
 package nz.ac.auckland.se281;
 
 public class Venue {
+
+  // Variables for the Venue class
   private String venueName;
   private String venueCode;
   private String capacityInput;
@@ -34,7 +36,8 @@ public class Venue {
 
   public String getAvailableDate() {
     if (availableDate == null) {
-      // Return a blank string if available date is not set
+      // Return a blank string if available date is not set to prevent null pointer exception
+      // breaking the program
       return "";
     }
     return availableDate;

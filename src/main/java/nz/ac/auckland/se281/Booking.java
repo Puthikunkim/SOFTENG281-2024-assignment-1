@@ -3,6 +3,7 @@ package nz.ac.auckland.se281;
 import java.util.ArrayList;
 
 public class Booking {
+
   // Variables for the Booking class.
   private String bookingReference;
   private String venueName;
@@ -11,10 +12,11 @@ public class Booking {
   private String customerEmail;
   private String attendeeCount;
   private String dateOfBooking;
+
   // ArrayList to store services.
   private ArrayList<Service> serviceList = new ArrayList<Service>();
 
-  // Constructor for the Venue class
+  // Constructor for the Booking class
   public Booking(
       String bookingReference,
       String venueName,
@@ -67,7 +69,7 @@ public class Booking {
     return serviceList;
   }
 
-  // Finding the different services.
+  // Finding the different types of services inside the service list for the specified booking.
   public CateringService findCateringService() {
     for (Service service : serviceList) {
       if (service instanceof CateringService) {
