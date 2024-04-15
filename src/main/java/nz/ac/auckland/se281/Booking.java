@@ -14,7 +14,7 @@ public class Booking {
   private String dateOfBooking;
 
   // ArrayList to store services.
-  private ArrayList<Service> serviceList = new ArrayList<Service>();
+  private ArrayList<Service> serviceList;
 
   // Constructor for the Booking class
   public Booking(
