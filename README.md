@@ -1,3 +1,4 @@
-# Assignment 1
+# Venture Hire System in Command Line
 
-You will find instructions for this assignment on the course website.
+This project is a command-line application developed in Java as part of the SOFTENG 281 Assignment 1. The Venture Hire System manages venues and bookings.
+
